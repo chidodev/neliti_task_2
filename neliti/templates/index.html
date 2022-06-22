@@ -37,8 +37,13 @@
             success: function(data){
                 console.log(data);
                 if(data.success){
-                    console.log(data.data);
-                    $('#result').html(JSON.stringify(data.data));
+                    let temp = '';
+                    series = data.data.properties.timeseries
+                    for(const item of series){
+                        if(item.data.next_1_hours)
+                            temp += item.time + " : " + item.data.next_1_hours.summary.symbol_code + '<br/>';
+                    }
+                    $('#result').html(temp);
                 }else{
                     alert("Please input correct information");
                 }

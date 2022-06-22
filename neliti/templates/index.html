@@ -1,4 +1,4 @@
-
+{% csrf_token %}
 <!DOCTYPE html>
 <html>
 
@@ -18,19 +18,31 @@
     <button onclick="fnGetWeather()">Get Weather</button>
 </body>
 <script>
+    var csrf_token = '{{csrf_token}}';
+    console.log("=== csrf:", csrf_token)
     $(function(){
-        
+        $.ajaxSetup({
+            headers: {
+                "X-CSRFToken": $('[name=csrfmiddlewaretoken]').val()
+            }
+        })
     })
     function fnGetWeather(){
         console.log("=======")
         var lat = $("#lat").val(); 
         var lon = $("#lon").val();
+
         $.ajax({ 
             type:"POST",
             url: "./get_weather",
             data: {'lat': lat, 'lon': lon},
             success: function(data){
                 console.log(data);
+                if(data.success){
+                    console.log(data.data);
+                }else{
+                    console.log(data.msg);
+                }
             }
         })
     }

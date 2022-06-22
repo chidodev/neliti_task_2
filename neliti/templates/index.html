@@ -1,0 +1,38 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Load File</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+
+<body>
+    <form action="#">
+        <label for="lat">Lat:</label><br>
+        <input type="text" id="lat" name="lat" value=""><br>
+        <label for="lname">Lon</label><br>
+        <input type="text" id="lon" name="lon" value=""><br><br>
+    </form>
+    <button onclick="fnGetWeather()">Get Weather</button>
+</body>
+<script>
+    $(function(){
+        
+    })
+    function fnGetWeather(){
+        console.log("=======")
+        var lat = $("#lat").val(); 
+        var lon = $("#lon").val();
+        $.ajax({ 
+            type:"POST",
+            url: "./get_weather",
+            data: {'lat': lat, 'lon': lon},
+            success: function(data){
+                console.log(data);
+            }
+        })
+    }
+</script>
+</html>

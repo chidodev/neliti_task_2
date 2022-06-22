@@ -16,10 +16,10 @@
         <input type="text" id="lon" name="lon" value=""><br><br>
     </form>
     <button onclick="fnGetWeather()">Get Weather</button>
+    <div id="result"></div>
 </body>
 <script>
     var csrf_token = '{{csrf_token}}';
-    console.log("=== csrf:", csrf_token)
     $(function(){
         $.ajaxSetup({
             headers: {
@@ -28,10 +28,8 @@
         })
     })
     function fnGetWeather(){
-        console.log("=======")
         var lat = $("#lat").val(); 
         var lon = $("#lon").val();
-
         $.ajax({ 
             type:"POST",
             url: "./get_weather",
@@ -40,8 +38,9 @@
                 console.log(data);
                 if(data.success){
                     console.log(data.data);
+                    $('#result').html(JSON.stringify(data.data));
                 }else{
-                    console.log(data.msg);
+                    alert("Please input correct information");
                 }
             }
         })
